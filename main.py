@@ -1,3 +1,4 @@
+import sys
 import pygame
 from asteroid import Asteroid
 from asteroidField import AsteroidField
@@ -34,6 +35,11 @@ def main():
         screen.fill("black")
         for obj in drawable:
             obj.draw(screen)
+        for a in asteroids:
+            if a.collision(player):
+                print("Game Over")
+                sys.exit()
+
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
