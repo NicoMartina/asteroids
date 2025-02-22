@@ -4,6 +4,7 @@ from asteroid import Asteroid
 from asteroidField import AsteroidField
 from constants import *
 from player import Player
+from shot import Shot
 
 def main():
     pygame.init()
@@ -16,10 +17,12 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
 
+
     # Set up containers for both classes
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable,)
+    Shot.containers = (updatable, drawable)  # Add this with your other container assignments
 
     # Then create instances
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
