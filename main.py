@@ -16,13 +16,13 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
-
+    bullets = pygame.sprite.Group()
 
     # Set up containers for both classes
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable,)
-    Shot.containers = (updatable, drawable)  # Add this with your other container assignments
+    Shot.containers = (updatable, drawable, bullets)  # Add this with your other container assignments
 
     # Then create instances
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
@@ -33,8 +33,18 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        #SETS THE COLOR OF THE WINDOW
+        
+        # Debug prints
+        print(f"Number of bullets: {len(bullets)}")
+        print(f"Number of asteroids: {len(asteroids)}")
+        
         updatable.update(dt)
+        collisions = pygame.sprite.groupcollide(bullets, asteroids, True, False)
+        for bullet, asteroid_list in collisions.items():
+            for asteroid in asteroid_list:
+                asteroid.split()
+        print(f"Collisions detected: {collisions}")  # See if any collisions are happening
+        
         screen.fill("black")
         for obj in drawable:
             obj.draw(screen)
